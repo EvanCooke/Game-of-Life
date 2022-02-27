@@ -3,6 +3,8 @@ public class Cell {
     int y;
     boolean living;
 
+
+
     Cell(int x, int y, boolean living){
         this.x = x;
         this.y = y;
@@ -15,6 +17,14 @@ public class Cell {
 
     public int getY() {
         return y;
+    }
+
+    public void setLiving(boolean living) {
+        this.living = living;
+    }
+
+    public boolean getLiving(){
+        return living;
     }
 
 }
