@@ -16,7 +16,7 @@ public class Panel extends JPanel implements ActionListener{
     static final int UNIT_SIZE = 25;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 750;
+    static int DELAY = 75;
 
     //Cell[] livingCells = new Cell[NUM_UNITS];
     static ArrayList<Cell> livingCells = new ArrayList<>();
@@ -102,7 +102,6 @@ public class Panel extends JPanel implements ActionListener{
                 if(grid.getGrid()[x][y].getLiving()) {
                     if(numTouching == 2 || numTouching == 3){
                         survivingCells.add(grid.getGrid()[x][y]);
-                        break;
                     }
                 }else {
                     // rule 2
