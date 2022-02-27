@@ -17,6 +17,7 @@ public class Panel extends JPanel implements ActionListener {
 
     Grid grid = new Grid();
 
+    int generation = 1;
     Timer timer;
     Random random;
     boolean running = false;
@@ -150,6 +151,8 @@ public class Panel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (running) {
+            generation++;
+            System.out.println("Generation: " + generation);
             checkRules();
         }
         repaint();
