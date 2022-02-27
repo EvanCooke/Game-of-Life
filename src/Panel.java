@@ -16,7 +16,7 @@ public class Panel extends JPanel implements ActionListener{
     static final int UNIT_SIZE = 25;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 1750;
+    static int DELAY = 750;
 
     //Cell[] livingCells = new Cell[NUM_UNITS];
     static ArrayList<Cell> livingCells = new ArrayList<>();
@@ -38,11 +38,11 @@ public class Panel extends JPanel implements ActionListener{
         grid.getGrid()[6][7].setLiving(true);
         grid.getGrid()[7][7].setLiving(true);
 
-        livingCells.add(grid.getGrid()[6][5]);
-        livingCells.add(grid.getGrid()[7][6]);
-        livingCells.add(grid.getGrid()[5][7]);
-        livingCells.add(grid.getGrid()[6][7]);
-        livingCells.add(grid.getGrid()[7][7]);
+        livingCells.add(grid.getGrid()[8][7]);
+        livingCells.add(grid.getGrid()[9][8]);
+        livingCells.add(grid.getGrid()[7][9]);
+        livingCells.add(grid.getGrid()[8][9]);
+        livingCells.add(grid.getGrid()[9][9]);
 
         System.out.println(livingCells.size());
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -95,59 +95,18 @@ public class Panel extends JPanel implements ActionListener{
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
 
-//        // rule 1
-//        for(Cell cell : livingCells){
-//            int numTouching = numTouching(cell);
-//            if(numTouching == 2 || numTouching == 3){
-//                survivingCells.add(cell);
-//                break;
-//            }
-//            cell.setLiving(false);
-//        }
-
-        // rule 2
         for(int y = 1; y < grid.getGrid().length-1; y++){
             for(int x = 1; x < grid.getGrid()[0].length-1; x++){                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
-
+                int numTouching = numTouching(grid.getGrid()[x][y]);
                 // rule 1
                 if(grid.getGrid()[x][y].getLiving()) {
-                    int numTouching = numTouching(grid.getGrid()[x][y]);
                     if(numTouching == 2 || numTouching == 3){
                         survivingCells.add(grid.getGrid()[x][y]);
                         break;
                     }
-                    //grid.getGrid()[x][y].setLiving(false);
-
-
                 }else {
-
-                    int numTouching = 0;
-                    if (grid.getGrid()[x + 1][y + 1].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x + 1][y].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x + 1][y - 1].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x][y + 1].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x][y - 1].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x - 1][y + 1].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x - 1][y].getLiving()) {
-                        numTouching++;
-                    }
-                    if (grid.getGrid()[x - 1][y - 1].getLiving()) {
-                        numTouching++;
-                    }
+                    // rule 2
                     if (numTouching == 3) {
-                        //grid.getGrid()[x][y].setLiving(true);
                         survivingCells.add(grid.getGrid()[x][y]);
                     }
                 }
@@ -172,41 +131,33 @@ public class Panel extends JPanel implements ActionListener{
         int x = cell.getX();
         int y = cell.getY();
 
-        for(Cell current : livingCells) {
-            if (x == current.getX() + 1 && y == current.getY() + 1) {
-                numTouching++;
-            }
-            if (x == current.getX() + 1 && y == current.getY()) {
-                numTouching++;
-            }
-            if (x == current.getX() + 1 && y == current.getY() - 1) {
-                numTouching++;
-            }
-            if (x == current.getX() && y == current.getY() + 1) {
-                numTouching++;
-            }
-            if (x == current.getX() && y == current.getY() - 1) {
-                numTouching++;
-            }
-            if (x == current.getX() - 1 && y == current.getY() + 1) {
-                numTouching++;
-            }
-            if (x == current.getX() + 1 && y == current.getY()) {
-                numTouching++;
-            }
-            if (x == current.getX() - 1 && y == current.getY() - 1) {
-                numTouching++;
-            }
+        if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x + 1][y].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x + 1][y - 1].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x][y + 1].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x][y - 1].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x - 1][y + 1].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x - 1][y].getLiving()) {
+            numTouching++;
+        }
+        if (grid.getGrid()[x - 1][y - 1].getLiving()) {
+            numTouching++;
         }
         return numTouching;
     }
 
-//    public void updateLivingList(){
-//        for(int i = 0; i < livingCells.size(); i++){
-//            x[i] = livingCells.get(i).getX();
-//            y[i] = livingCells.get(i).getY();
-//        }
-//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
