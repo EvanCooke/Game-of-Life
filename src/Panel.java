@@ -2,36 +2,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
 
 
-
-
-public class Panel extends JPanel implements ActionListener{
+public class Panel extends JPanel implements ActionListener {
     static final int SCREEN_WIDTH = 800;
     static final int SCREEN_HEIGHT = 800;
-    static final int UNIT_SIZE = 25;
+    static final int UNIT_SIZE = 15;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
     static int DELAY = 75;
-
-    //Cell[] livingCells = new Cell[NUM_UNITS];
     static ArrayList<Cell> livingCells = new ArrayList<>();
 
-    // Grid
-    //int[][] grid = new int[Panel.SCREEN_WIDTH / Panel.UNIT_SIZE][Panel.SCREEN_HEIGHT / Panel.UNIT_SIZE];
     Grid grid = new Grid();
-    int[] x = new int[NUM_UNITS];
-    int[] y = new int[NUM_UNITS];
 
     Timer timer;
     Random random;
     boolean running = false;
 
-    Panel(){
+    Panel() {
         grid.getGrid()[6][5].setLiving(true);
         grid.getGrid()[7][6].setLiving(true);
         grid.getGrid()[5][7].setLiving(true);
@@ -55,7 +45,6 @@ public class Panel extends JPanel implements ActionListener{
     }
 
     public void startGame() {
-        //checkRules();
         running = true;
         timer = new Timer(DELAY, this);
         timer.start();
@@ -75,9 +64,9 @@ public class Panel extends JPanel implements ActionListener{
             }
         }
 
-        for(Cell cell : livingCells){
+        for (Cell cell : livingCells) {
             g.setColor(Color.white);
-            g.fillRect(cell.getX() * UNIT_SIZE, cell.getY()* UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+            g.fillRect(cell.getX() * UNIT_SIZE, cell.getY() * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
 
         }
 
@@ -91,19 +80,19 @@ public class Panel extends JPanel implements ActionListener{
     // 1. Any live cell with two or three live neighbours survives.
     // 2. Any dead cell with three live neighbours becomes a live cell.
     // 3. All other live cells die in the next generation. Similarly, all other dead cells stay dead.
-    public void checkRules(){
+    public void checkRules() {
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
 
-        for(int y = 1; y < grid.getGrid().length-1; y++){
-            for(int x = 1; x < grid.getGrid()[0].length-1; x++){                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
+        for (int y = 1; y < grid.getGrid().length - 1; y++) {
+            for (int x = 1; x < grid.getGrid()[0].length - 1; x++) {                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
                 int numTouching = numTouching(grid.getGrid()[x][y]);
                 // rule 1
-                if(grid.getGrid()[x][y].getLiving()) {
-                    if(numTouching == 2 || numTouching == 3){
+                if (grid.getGrid()[x][y].getLiving()) {
+                    if (numTouching == 2 || numTouching == 3) {
                         survivingCells.add(grid.getGrid()[x][y]);
                     }
-                }else {
+                } else {
                     // rule 2
                     if (numTouching == 3) {
                         survivingCells.add(grid.getGrid()[x][y]);
@@ -113,11 +102,11 @@ public class Panel extends JPanel implements ActionListener{
         }
 
         // rule 3
-        for(int y = 0; y < grid.getGrid().length; y++){
-            for(int x = 0; x < grid.getGrid()[0].length; x++) {
-                if(!survivingCells.contains(grid.getGrid()[x][y])){
+        for (int y = 0; y < grid.getGrid().length; y++) {
+            for (int x = 0; x < grid.getGrid()[0].length; x++) {
+                if (!survivingCells.contains(grid.getGrid()[x][y])) {
                     grid.getGrid()[x][y].setLiving(false);
-                }else{
+                } else {
                     grid.getGrid()[x][y].setLiving(true);
                     livingCells.add(grid.getGrid()[x][y]);
                 }
@@ -125,7 +114,7 @@ public class Panel extends JPanel implements ActionListener{
         }
     }
 
-    public int numTouching(Cell cell){
+    public int numTouching(Cell cell) {
         int numTouching = 0;
         int x = cell.getX();
         int y = cell.getY();
@@ -160,8 +149,7 @@ public class Panel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(running){
-            //updateData();
+        if (running) {
             checkRules();
         }
         repaint();
