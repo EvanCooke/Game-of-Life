@@ -84,7 +84,7 @@ public class Panel extends JPanel implements ActionListener {
     public void checkRules() {
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
-        
+
         for (int y = 1; y < grid.getGrid().length - 1; y++) {
             for (int x = 1; x < grid.getGrid()[0].length - 1; x++) {                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
                 int numTouching = numTouching(grid.getGrid()[x][y]);
