@@ -84,7 +84,7 @@ public class Panel extends JPanel implements ActionListener {
     public void checkRules() {
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
-
+        
         for (int y = 1; y < grid.getGrid().length - 1; y++) {
             for (int x = 1; x < grid.getGrid()[0].length - 1; x++) {                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
                 int numTouching = numTouching(grid.getGrid()[x][y]);
@@ -108,6 +108,7 @@ public class Panel extends JPanel implements ActionListener {
                 if (!survivingCells.contains(grid.getGrid()[x][y])) {
                     grid.getGrid()[x][y].setLiving(false);
                 } else {
+
                     grid.getGrid()[x][y].setLiving(true);
                     livingCells.add(grid.getGrid()[x][y]);
                 }
@@ -119,31 +120,88 @@ public class Panel extends JPanel implements ActionListener {
         int numTouching = 0;
         int x = cell.getX();
         int y = cell.getY();
+        boolean left, right, top, bottom;
 
-        if (grid.getGrid()[x + 1][y + 1].getLiving()) {
-            numTouching++;
+        if(x == 0){
+
+
+            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y + 1].getLiving()) {
+                numTouching++;
+                left = true;
+            }
+            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y].getLiving()) {
+                numTouching++;
+                left = true;
+            }
+            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y - 1].getLiving()) {
+                numTouching++;
+                left = true;
+            }
+        } else {
+            if (grid.getGrid()[x - 1][y + 1].getLiving()) {
+                numTouching++;
+            }
+            if (grid.getGrid()[x - 1][y].getLiving()) {
+                numTouching++;
+            }
+            if (grid.getGrid()[x - 1][y - 1].getLiving()) {
+                numTouching++;
+            }
         }
-        if (grid.getGrid()[x + 1][y].getLiving()) {
-            numTouching++;
+
+
+
+        if(y == 0){
+
+            top = true;
+
+            if (grid.getGrid()[x + 1][y + grid.getGrid().length - 1].getLiving()) {
+                numTouching++;
+            }
+
+            if (grid.getGrid()[x][y + grid.getGrid().length - 1].getLiving()) {
+                numTouching++;
+            }
+        }else{
+            if (grid.getGrid()[x + 1][y - 1].getLiving()) {
+                numTouching++;
+            }
+
+            if (grid.getGrid()[x][y - 1].getLiving()) {
+                numTouching++;
+            }
         }
-        if (grid.getGrid()[x + 1][y - 1].getLiving()) {
-            numTouching++;
+
+        if (x == grid.getGrid()[0].length){
+            right = true;
+
+            if (grid.getGrid()[x - grid.getGrid()[0].length - 1 ][y + 1].getLiving()) {
+                numTouching++;
+            }
+            if (grid.getGrid()[x - grid.getGrid()[0].length - 1][y].getLiving()) {
+                numTouching++;
+            }
+
+        }else{
+            if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+                numTouching++;
+            }
+            if (grid.getGrid()[x + 1][y].getLiving()) {
+                numTouching++;
+            }
         }
-        if (grid.getGrid()[x][y + 1].getLiving()) {
-            numTouching++;
+
+        if(y == grid.getGrid().length){
+            if (grid.getGrid()[x][y - grid.getGrid().length - 1].getLiving()) {
+                numTouching++;
+            }
+        }else{
+            if (grid.getGrid()[x][y + 1].getLiving()) {
+                numTouching++;
+            }
         }
-        if (grid.getGrid()[x][y - 1].getLiving()) {
-            numTouching++;
-        }
-        if (grid.getGrid()[x - 1][y + 1].getLiving()) {
-            numTouching++;
-        }
-        if (grid.getGrid()[x - 1][y].getLiving()) {
-            numTouching++;
-        }
-        if (grid.getGrid()[x - 1][y - 1].getLiving()) {
-            numTouching++;
-        }
+
+
         return numTouching;
     }
 
