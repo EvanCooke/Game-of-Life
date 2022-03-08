@@ -3,8 +3,8 @@ public class Grid {
     int width, height;
 
     Grid() {
-        //grid = new Cell[(Panel.SCREEN_WIDTH / Panel.UNIT_SIZE)][(Panel.SCREEN_HEIGHT / Panel.UNIT_SIZE)];
-        grid = new Cell[20][20];
+        grid = new Cell[(Panel.SCREEN_WIDTH / Panel.UNIT_SIZE)][(Panel.SCREEN_HEIGHT / Panel.UNIT_SIZE)];
+        //grid = new Cell[20][20];
 
 
         for (int y = 0; y < grid.length; y++) {

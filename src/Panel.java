@@ -12,7 +12,7 @@ public class Panel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 15;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 175;
+    static int DELAY = 15;
     static ArrayList<Cell> livingCells = new ArrayList<>();
 
     Grid grid = new Grid();
@@ -23,17 +23,7 @@ public class Panel extends JPanel implements ActionListener {
     boolean running = false;
 
     Panel() {
-        grid.getGrid()[6][5].setLiving(true);
-        grid.getGrid()[7][6].setLiving(true);
-        grid.getGrid()[5][7].setLiving(true);
-        grid.getGrid()[6][7].setLiving(true);
-        grid.getGrid()[7][7].setLiving(true);
-
-        livingCells.add(grid.getGrid()[8][7]);
-        livingCells.add(grid.getGrid()[9][8]);
-        livingCells.add(grid.getGrid()[7][9]);
-        livingCells.add(grid.getGrid()[8][9]);
-        livingCells.add(grid.getGrid()[9][9]);
+        Shapes.glider(grid, 6,7);
 
         System.out.println(livingCells.size());
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -152,7 +142,6 @@ public class Panel extends JPanel implements ActionListener {
                     numTouching++;
                 }
             } else if(x == 0 && y == grid.height){
-                System.out.println("test");
                 if(grid.getGrid()[x][y - 1].getLiving()){
                     numTouching++;
                 }
@@ -236,7 +225,6 @@ public class Panel extends JPanel implements ActionListener {
                 }
             } else {
 
-
                 // non corner edge cells
                 if (x == 0) {
                     if (grid.getGrid()[x + 1][y + 1].getLiving()) {
@@ -248,7 +236,7 @@ public class Panel extends JPanel implements ActionListener {
                     if (grid.getGrid()[x][y - 1].getLiving()) {
                         numTouching++;
                     }
-                    if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+                    if (grid.getGrid()[x + 1][y].getLiving()) {
                         numTouching++;
                     }
                     if (grid.getGrid()[x + 1][y - 1].getLiving()) {
@@ -293,6 +281,7 @@ public class Panel extends JPanel implements ActionListener {
                     }
 
                 } else if (y == 0) {
+
                     if (grid.getGrid()[x + 1][y].getLiving()) {
                         numTouching++;
                     }
