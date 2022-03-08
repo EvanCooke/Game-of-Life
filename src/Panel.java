@@ -12,7 +12,7 @@ public class Panel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 15;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 75;
+    static int DELAY = 175;
     static ArrayList<Cell> livingCells = new ArrayList<>();
 
     Grid grid = new Grid();
@@ -85,8 +85,8 @@ public class Panel extends JPanel implements ActionListener {
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
 
-        for (int y = 0; y < grid.height; y++) {
-            for (int x = 0; x < grid.width; x++) {
+        for (int y = 0; y <= grid.height; y++) {
+            for (int x = 0; x <= grid.width; x++) {
                 int numTouching = numTouching(grid.getGrid()[x][y]);
                 // rule 1
                 if (grid.getGrid()[x][y].getLiving()) {
@@ -123,7 +123,6 @@ public class Panel extends JPanel implements ActionListener {
 
         // edges
         if(x == 0 || y == 0 || x == grid.width || y == grid.height){
-
             // corners
             if(x == 0 && y == 0){
                 if(grid.getGrid()[0][1].getLiving()){
@@ -153,6 +152,7 @@ public class Panel extends JPanel implements ActionListener {
                     numTouching++;
                 }
             } else if(x == 0 && y == grid.height){
+                System.out.println("test");
                 if(grid.getGrid()[x][y - 1].getLiving()){
                     numTouching++;
                 }
