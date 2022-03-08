@@ -12,7 +12,7 @@ public class Panel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 15;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 75;
+    static int DELAY = 15;
     static ArrayList<Cell> livingCells = new ArrayList<>();
 
     Grid grid = new Grid();
@@ -85,8 +85,8 @@ public class Panel extends JPanel implements ActionListener {
         ArrayList<Cell> survivingCells = new ArrayList<>();
         livingCells.clear();
 
-        for (int y = 1; y < grid.getGrid().length - 1; y++) {
-            for (int x = 1; x < grid.getGrid()[0].length - 1; x++) {                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
+        for (int y = 0; y < grid.height; y++) {
+            for (int x = 0; x < grid.width; x++) {                    // REMOVE -2 AND =2 FROM THESE FOR LOOPS
                 int numTouching = numTouching(grid.getGrid()[x][y]);
                 // rule 1
                 if (grid.getGrid()[x][y].getLiving()) {
@@ -103,12 +103,11 @@ public class Panel extends JPanel implements ActionListener {
         }
 
         // rule 3
-        for (int y = 0; y < grid.getGrid().length; y++) {
-            for (int x = 0; x < grid.getGrid()[0].length; x++) {
+        for (int y = 0; y < grid.height; y++) {
+            for (int x = 0; x < grid.width; x++) {
                 if (!survivingCells.contains(grid.getGrid()[x][y])) {
                     grid.getGrid()[x][y].setLiving(false);
                 } else {
-
                     grid.getGrid()[x][y].setLiving(true);
                     livingCells.add(grid.getGrid()[x][y]);
                 }
@@ -122,22 +121,235 @@ public class Panel extends JPanel implements ActionListener {
         int y = cell.getY();
         boolean left, right, top, bottom;
 
-        if(x == 0){
+        // edges
+        if(x == 0 || y == 0 || x == grid.width || y == grid.height){
+
+            // corners
+            if(x == 0 && y == 0){
+                if(grid.getGrid()[0][1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[1][0].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[1][1].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[grid.width][grid.height].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width - 1][grid.height].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width][grid.height - 1].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[grid.width - 2][grid.height].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width][grid.height - 2].getLiving()){
+                    numTouching++;
+                }
+            } else if(x == 0 && y == grid.height){
+                if(grid.getGrid()[x][y + 1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x + 1][y + 1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x + 1][y].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[grid.width][0].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width - 1][0].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width][1].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[grid.width][2].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[grid.width - 2][2].getLiving()){
+                    numTouching++;
+                }
+
+            } else if(x == grid.width && y == 0){
+                if(grid.getGrid()[x - 1][y].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x][y + 1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x - 1][y + 1].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[0][grid.height].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[0][grid.height - 1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[1][grid.height].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[0][grid.height - 2].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[2][grid.height].getLiving()){
+                    numTouching++;
+                }
+            } else if(x == grid.width && y == grid.height){
+                if(grid.getGrid()[x - 1][y].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x - 1][y - 1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[x][y - 1].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[0][0].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[0][1].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[1][0].getLiving()){
+                    numTouching++;
+                }
+
+                if(grid.getGrid()[2][0].getLiving()){
+                    numTouching++;
+                }
+                if(grid.getGrid()[0][2].getLiving()){
+                    numTouching++;
+                }
+            } else {
 
 
-            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y + 1].getLiving()) {
-                numTouching++;
-                left = true;
+                // non corner edge cells
+                if (x == 0) {
+                    if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+
+                    if (grid.getGrid()[grid.width][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[grid.width][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[grid.width][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+
+                } else if (x == grid.width) {
+                    if (grid.getGrid()[x][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y].getLiving()) {
+                        numTouching++;
+                    }
+
+                    if (grid.getGrid()[0][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[0][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[0][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+
+                } else if (y == 0) {
+                    if (grid.getGrid()[x + 1][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][y + 1].getLiving()) {
+                        numTouching++;
+                    }
+
+                    if (grid.getGrid()[x][grid.height].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][grid.height].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][grid.height].getLiving()) {
+                        numTouching++;
+                    }
+                } else if (y == grid.height) {
+                    if (grid.getGrid()[x][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][y].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][y - 1].getLiving()) {
+                        numTouching++;
+                    }
+
+                    if (grid.getGrid()[x][0].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x + 1][0].getLiving()) {
+                        numTouching++;
+                    }
+                    if (grid.getGrid()[x - 1][0].getLiving()) {
+                        numTouching++;
+                    }
+                }
             }
-            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y].getLiving()) {
-                numTouching++;
-                left = true;
-            }
-            if (grid.getGrid()[x + grid.getGrid()[0].length - 1][y - 1].getLiving()) {
-                numTouching++;
-                left = true;
-            }
-        } else {
+        }
+
+        // non edge cells
+        else{
             if (grid.getGrid()[x - 1][y + 1].getLiving()) {
                 numTouching++;
             }
@@ -147,22 +359,6 @@ public class Panel extends JPanel implements ActionListener {
             if (grid.getGrid()[x - 1][y - 1].getLiving()) {
                 numTouching++;
             }
-        }
-
-
-
-        if(y == 0){
-
-            top = true;
-
-            if (grid.getGrid()[x + 1][y + grid.getGrid().length - 1].getLiving()) {
-                numTouching++;
-            }
-
-            if (grid.getGrid()[x][y + grid.getGrid().length - 1].getLiving()) {
-                numTouching++;
-            }
-        }else{
             if (grid.getGrid()[x + 1][y - 1].getLiving()) {
                 numTouching++;
             }
@@ -170,37 +366,16 @@ public class Panel extends JPanel implements ActionListener {
             if (grid.getGrid()[x][y - 1].getLiving()) {
                 numTouching++;
             }
-        }
-
-        if (x == grid.getGrid()[0].length){
-            right = true;
-
-            if (grid.getGrid()[x - grid.getGrid()[0].length - 1 ][y + 1].getLiving()) {
-                numTouching++;
-            }
-            if (grid.getGrid()[x - grid.getGrid()[0].length - 1][y].getLiving()) {
-                numTouching++;
-            }
-
-        }else{
             if (grid.getGrid()[x + 1][y + 1].getLiving()) {
                 numTouching++;
             }
             if (grid.getGrid()[x + 1][y].getLiving()) {
                 numTouching++;
             }
-        }
-
-        if(y == grid.getGrid().length){
-            if (grid.getGrid()[x][y - grid.getGrid().length - 1].getLiving()) {
-                numTouching++;
-            }
-        }else{
             if (grid.getGrid()[x][y + 1].getLiving()) {
                 numTouching++;
             }
         }
-
 
         return numTouching;
     }
