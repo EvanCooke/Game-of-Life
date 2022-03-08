@@ -12,7 +12,7 @@ public class Panel extends JPanel implements ActionListener {
     static final int UNIT_SIZE = 15;
     static final int NUM_UNITS = (SCREEN_WIDTH * SCREEN_HEIGHT) / UNIT_SIZE;
 
-    static int DELAY = 15;
+    static int DELAY = 1;
     static ArrayList<Cell> livingCells = new ArrayList<>();
 
     Grid grid = new Grid();
@@ -24,6 +24,11 @@ public class Panel extends JPanel implements ActionListener {
 
     Panel() {
         Shapes.glider(grid, 6,7);
+        Shapes.cross(grid, 4, 18);
+        Shapes.chaos(grid, 14, 5);
+        Shapes.chaos(grid, 17, 15);
+        Shapes.chaos(grid, 31, 25);
+        Shapes.chaos(grid, 34, 50);
 
         System.out.println(livingCells.size());
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
