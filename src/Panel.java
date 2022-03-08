@@ -23,12 +23,13 @@ public class Panel extends JPanel implements ActionListener {
     boolean running = false;
 
     Panel() {
-        Shapes.glider(grid, 6,7);
-        Shapes.cross(grid, 4, 18);
-        Shapes.chaos(grid, 14, 5);
-        Shapes.chaos(grid, 17, 15);
-        Shapes.chaos(grid, 31, 25);
-        Shapes.chaos(grid, 34, 50);
+        Shapes.glider(grid, 6,4);
+
+//        Shapes.cross(grid, 4, 18);
+//        Shapes.chaos(grid, 14, 5);
+//        Shapes.chaos(grid, 17, 15);
+//        Shapes.chaos(grid, 31, 25);
+//        Shapes.chaos(grid, 34, 50);
 
         System.out.println(livingCells.size());
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -133,19 +134,19 @@ public class Panel extends JPanel implements ActionListener {
                 if(grid.getGrid()[grid.width][grid.height].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[grid.width - 1][grid.height].getLiving()){
+                if(grid.getGrid()[0][grid.height].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[grid.width][grid.height - 1].getLiving()){
+                if(grid.getGrid()[grid.width][0].getLiving()){
                     numTouching++;
                 }
 
-                if(grid.getGrid()[grid.width - 2][grid.height].getLiving()){
-                    numTouching++;
-                }
-                if(grid.getGrid()[grid.width][grid.height - 2].getLiving()){
-                    numTouching++;
-                }
+//                if(grid.getGrid()[grid.width - 2][grid.height].getLiving()){
+//                    numTouching++;
+//                }
+//                if(grid.getGrid()[grid.width][grid.height - 2].getLiving()){
+//                    numTouching++;
+//                }
             } else if(x == 0 && y == grid.height){
                 if(grid.getGrid()[x][y - 1].getLiving()){
                     numTouching++;
@@ -160,19 +161,19 @@ public class Panel extends JPanel implements ActionListener {
                 if(grid.getGrid()[grid.width][0].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[grid.width - 1][0].getLiving()){
+                if(grid.getGrid()[0][0].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[grid.width][1].getLiving()){
+                if(grid.getGrid()[grid.width][grid.height].getLiving()){
                     numTouching++;
                 }
 
-                if(grid.getGrid()[grid.width][2].getLiving()){
-                    numTouching++;
-                }
-                if(grid.getGrid()[grid.width - 2][2].getLiving()){
-                    numTouching++;
-                }
+//                if(grid.getGrid()[grid.width][2].getLiving()){
+//                    numTouching++;
+//                }
+//                if(grid.getGrid()[grid.width - 2][2].getLiving()){
+//                    numTouching++;
+//                }
 
             } else if(x == grid.width && y == 0){
                 if(grid.getGrid()[x - 1][y].getLiving()){
@@ -188,19 +189,19 @@ public class Panel extends JPanel implements ActionListener {
                 if(grid.getGrid()[0][grid.height].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[0][grid.height - 1].getLiving()){
+                if(grid.getGrid()[0][0].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[1][grid.height].getLiving()){
+                if(grid.getGrid()[grid.width][grid.height].getLiving()){
                     numTouching++;
                 }
 
-                if(grid.getGrid()[0][grid.height - 2].getLiving()){
-                    numTouching++;
-                }
-                if(grid.getGrid()[2][grid.height].getLiving()){
-                    numTouching++;
-                }
+//                if(grid.getGrid()[0][grid.height - 2].getLiving()){
+//                    numTouching++;
+//                }
+//                if(grid.getGrid()[2][grid.height].getLiving()){
+//                    numTouching++;
+//                }
             } else if(x == grid.width && y == grid.height){
                 if(grid.getGrid()[x - 1][y].getLiving()){
                     numTouching++;
@@ -215,19 +216,19 @@ public class Panel extends JPanel implements ActionListener {
                 if(grid.getGrid()[0][0].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[0][1].getLiving()){
+                if(grid.getGrid()[0][grid.height].getLiving()){
                     numTouching++;
                 }
-                if(grid.getGrid()[1][0].getLiving()){
+                if(grid.getGrid()[grid.width][0].getLiving()){
                     numTouching++;
                 }
 
-                if(grid.getGrid()[2][0].getLiving()){
-                    numTouching++;
-                }
-                if(grid.getGrid()[0][2].getLiving()){
-                    numTouching++;
-                }
+//                if(grid.getGrid()[2][0].getLiving()){
+//                    numTouching++;
+//                }
+//                if(grid.getGrid()[0][2].getLiving()){
+//                    numTouching++;
+//                }
             } else {
 
                 // non corner edge cells
